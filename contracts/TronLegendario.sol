@@ -2,7 +2,7 @@ pragma solidity ^0.4.25;
 
 import "./SafeMath.sol";
 
-contract CrowdFunding {
+contract TronLegendario {
   using SafeMath for uint;
   
   struct Tariff {
@@ -57,10 +57,15 @@ contract CrowdFunding {
     owner = msg.sender;
     start();
     Do = true;
-       
-    tariffs.push(Tariff(100 * 28800, 200));
-    //tariffs.push(Tariff(1 * 28800, 100));
 
+    tariffs.push(Tariff(1 * 28800, 100));   
+    tariffs.push(Tariff(100 * 28800, 200));
+    tariffs.push(Tariff(100 * 28800, 300));
+    tariffs.push(Tariff(100 * 28800, 400));
+    tariffs.push(Tariff(100 * 28800, 500));
+    tariffs.push(Tariff(100 * 28800, 600));
+
+    
   }
 
   function setstate() public view  returns(uint Investors,uint Invested,uint RefRewards){
@@ -121,19 +126,19 @@ contract CrowdFunding {
       
     if (investors[spo].registered) {
 
-      investors[spo].referers.push(Referer(ref,3));
+      investors[spo].referers.push(Referer(ref,5));
       uint nvl = 1;
       emit referersRegistered(spo, nvl);
       if (investors[spo].exist){
         spo = investors[spo].sponsor;
         if (investors[spo].registered){
-          investors[spo].referers.push(Referer(ref,2));
+          investors[spo].referers.push(Referer(ref,3));
           nvl = 2;
           emit referersRegistered(spo, nvl);
           if (investors[spo].exist){
             spo = investors[spo].sponsor;
             if (investors[spo].registered){
-              investors[spo].referers.push(Referer(ref,1));
+              investors[spo].referers.push(Referer(ref,2));
               nvl = 3;
               emit referersRegistered(spo, nvl);
               if (investors[spo].exist){
