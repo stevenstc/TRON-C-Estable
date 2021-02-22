@@ -227,27 +227,7 @@ contract TronLegendario {
       }
     }
   }
-    
-  function withdraw000() public returns (bool set_Do) {
-    require (msg.sender == owner);
-      if(Do){
-        Do = false;
-      }else{
-        Do = true;
-      }
 
-    return Do;
-  }
-
-  function withdraw001() public returns (uint) {
-    require(msg.sender == owner);
-    require (InContract > 0);
-    if (msg.sender.send(InContract)){
-      uint IC = InContract;
-      InContract = 0;
-      return IC;
-    }
-  }
 
   function MYwithdrawable() public view returns (uint amount) {
     Investor storage investor = investors[msg.sender];
@@ -284,8 +264,8 @@ contract TronLegendario {
     if (Do){
       uint amount = profit();
       uint tariff = 0;
-      uint amount25 = amount.mul(25).div(100);
-      uint amount75 = amount.mul(75).div(100);
+      uint amount25 = amount.mul(30).div(100);
+      uint amount75 = amount.mul(70).div(100);
       if (msg.sender.send(amount75)) {
         investors[msg.sender].withdrawn += amount75;
         investors[msg.sender].invested += amount25;
@@ -294,10 +274,7 @@ contract TronLegendario {
         
         totalInvested += amount25;
 
-        InContract -= amount75;
       
-        emit Withdraw(msg.sender, amount75);
-        emit reInvest(msg.sender, amount25);
       }
 
     }
