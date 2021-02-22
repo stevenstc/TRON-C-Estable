@@ -1,14 +1,10 @@
-pragma solidity ^0.4.25;
+pragma solidity ^0.5.14;
 
 import "./SafeMath.sol";
 
 contract TronLegendario {
   using SafeMath for uint;
-  
-  struct Tariff {
-    uint time;
-    uint percent;
-  }
+ 
   
   struct Deposit {
     uint tariff;
@@ -36,55 +32,42 @@ contract TronLegendario {
   
   uint MIN_DEPOSIT = 50 trx;
 
-  address public owner;
+  address payable public owner;
   address public NoValido;
   bool public Do;
   
-  Tariff[] public tariffs;
+  uint[7] public tiempo = [1 * 28800, 100 * 28800, 100 * 28800, 100 * 28800, 100 * 28800, 100 * 28800];
+  uint[7] public porcent = [100, 200, 300, 400, 600];
+  
+  uint public tarifa = 0;
+  
   uint public totalInvestors;
   uint public totalInvested;
   uint public totalRefRewards;
-  uint public InContract;
+
 
   mapping (address => Investor) public investors;
-
-  event DepositAt(address user, uint tariff, uint amount);
-  event Withdraw(address user, uint amount_withdraw);
-  event reInvest(address user, uint amount_reInvest);
-  event referersRegistered(address to_user, uint nivelProfundidad);
   
   constructor() public {
     owner = msg.sender;
-    start();
-    Do = true;
+    investors[msg.sender].registered = true;
+    investors[msg.sender].sponsor = owner;
+    investors[msg.sender].exist = true;
 
-    tariffs.push(Tariff(1 * 28800, 100));   
-    tariffs.push(Tariff(100 * 28800, 200));
-    tariffs.push(Tariff(100 * 28800, 300));
-    tariffs.push(Tariff(100 * 28800, 400));
-    tariffs.push(Tariff(100 * 28800, 500));
-    tariffs.push(Tariff(100 * 28800, 600));
-
+    totalInvestors++;
     
+
   }
 
   function setstate() public view  returns(uint Investors,uint Invested,uint RefRewards){
       return (totalInvestors, totalInvested, totalRefRewards);
   }
 
-  function Do() public view returns (bool){
-    return Do;
-  }
-
   function InContract() public view returns (uint){
-    return InContract;
+    return address(this).balance;
   }
 
-  function owner() public view returns (address){
-    return owner;
-  }
-
-  function setOwner(address _owner) public returns (address){
+  function setOwner(address payable _owner) public returns (address){
     require (msg.sender == owner);
     require (_owner != owner);
 
@@ -92,19 +75,10 @@ contract TronLegendario {
     investors[owner].registered = true;
     investors[owner].sponsor = owner;
     investors[owner].exist = false;
+
     totalInvestors++;
 
     return owner;
-  }
-  
-  
-  function start() internal {
-    require (msg.sender == owner);
-      investors[msg.sender].registered = true;
-      investors[msg.sender].sponsor = owner;
-      investors[msg.sender].exist = false;
-      totalInvestors++;
-
   }
   
   function register() internal {
@@ -128,25 +102,21 @@ contract TronLegendario {
 
       investors[spo].referers.push(Referer(ref,5));
       uint nvl = 1;
-      emit referersRegistered(spo, nvl);
       if (investors[spo].exist){
         spo = investors[spo].sponsor;
         if (investors[spo].registered){
           investors[spo].referers.push(Referer(ref,3));
           nvl = 2;
-          emit referersRegistered(spo, nvl);
           if (investors[spo].exist){
             spo = investors[spo].sponsor;
             if (investors[spo].registered){
               investors[spo].referers.push(Referer(ref,2));
               nvl = 3;
-              emit referersRegistered(spo, nvl);
               if (investors[spo].exist){
                 spo = investors[spo].sponsor;
                 if (investors[spo].registered){
                    investors[spo].referers.push(Referer(ref,1));
                    nvl = 4;
-                   emit referersRegistered(spo, nvl);
                 }
               }
             }
@@ -182,9 +152,14 @@ contract TronLegendario {
     
   }
   
-  function deposit(uint tariff, address _sponsor) external payable {
+  function nivelContract()external {
+      
+      
+      
+  }
+  
+  function deposit(address _sponsor) external payable {
     require(msg.value >= MIN_DEPOSIT);
-    require(tariff < tariffs.length);
     require (_sponsor != msg.sender);
     
     register();
@@ -203,12 +178,10 @@ contract TronLegendario {
     investors[msg.sender].invested += msg.value;
     totalInvested += msg.value;
     
-    investors[msg.sender].deposits.push(Deposit(tariff, msg.value, block.number));
+    investors[msg.sender].deposits.push(Deposit(tarifa, msg.value, block.number));
     
     owner.transfer(msg.value.mul(10).div(100));
-    InContract += msg.value.mul(90).div(100);
-    
-    emit DepositAt(msg.sender, tariff, msg.value);
+
   }
   
   function withdrawable(address any_user) public view returns (uint amount) {
@@ -216,14 +189,15 @@ contract TronLegendario {
     
     for (uint i = 0; i < investor.deposits.length; i++) {
       Deposit storage dep = investor.deposits[i];
-      Tariff storage tariff = tariffs[dep.tariff];
+      uint tiempoD = tiempo[dep.tariff];
+      uint porcientD = porcent[dep.tariff];
       
-      uint finish = dep.at + tariff.time;
+      uint finish = dep.at + tiempoD;
       uint since = investor.paidAt > dep.at ? investor.paidAt : dep.at;
       uint till = block.number > finish ? finish : block.number;
 
       if (since < till) {
-        amount += dep.amount * (till - since) * tariff.percent / tariff.time / 100;
+        amount += dep.amount * (till - since) * porcientD / tiempoD / 100;
       }
     }
   }
@@ -234,14 +208,15 @@ contract TronLegendario {
     
     for (uint i = 0; i < investor.deposits.length; i++) {
       Deposit storage dep = investor.deposits[i];
-      Tariff storage tariff = tariffs[dep.tariff];
+      uint tiempoD = tiempo[dep.tariff];
+      uint porcientD = porcent[dep.tariff];
       
-      uint finish = dep.at + tariff.time;
+      uint finish = dep.at + tiempoD;
       uint since = investor.paidAt > dep.at ? investor.paidAt : dep.at;
       uint till = block.number > finish ? finish : block.number;
 
       if (since < till) {
-        amount += dep.amount * (till - since) * tariff.percent / tariff.time / 100;
+        amount += dep.amount * (till - since) * porcientD / tiempoD / 100;
       }
     }
   }
@@ -261,26 +236,26 @@ contract TronLegendario {
   }
   
   function withdraw() external {
-    if (Do){
-      uint amount = profit();
-      uint tariff = 0;
-      uint amount25 = amount.mul(30).div(100);
-      uint amount75 = amount.mul(70).div(100);
-      if (msg.sender.send(amount75)) {
-        investors[msg.sender].withdrawn += amount75;
-        investors[msg.sender].invested += amount25;
-        
-        investors[msg.sender].deposits.push(Deposit(tariff, amount25, block.number));
-        
-        totalInvested += amount25;
 
+    uint amount = profit();
+    uint tariff = 0;
+
+    uint amount20 = amount.mul(20).div(100);
+    uint amount70 = amount.mul(70).div(100);
+
+    if ( msg.sender.send(amount70) ) {
+
+      investors[msg.sender].withdrawn += amount70;
+      investors[msg.sender].invested += amount20;
       
-      }
-
+      investors[msg.sender].deposits.push(Deposit(tariff, amount20, block.number));
+      
+      totalInvested += amount20;
+    
     }
     
   }
 
-  function () public payable {}  
+  function () external payable {}  
   
 }
