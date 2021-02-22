@@ -20,7 +20,6 @@ contract TronLegendario {
   struct Investor {
     bool registered;
     address sponsor;
-    bool exist;
     Referer[] referers;
     uint balanceRef;
     uint totalRef;
@@ -30,15 +29,20 @@ contract TronLegendario {
     uint withdrawn;
   }
   
-  uint MIN_DEPOSIT = 50 trx;
+  uint public MIN_DEPOSIT = 50 trx;
+  uint public RETIRO_DIARIO = 45000 trx;
+  uint public ULTIMO_REINICIO;
 
   address payable public owner;
   address public NoValido;
   bool public Do;
+
+  uint[4] public porcientos = [5, 3, 2, 1];
   
-  uint[7] public tiempo = [1 * 28800, 100 * 28800, 100 * 28800, 100 * 28800, 100 * 28800, 100 * 28800];
-  uint[7] public porcent = [100, 200, 300, 400, 600];
-  
+  uint[5] public tiempo = [ 100 * 28800, 100 * 28800, 100 * 28800, 100 * 28800, 100 * 28800];
+  uint[5] public porcent = [ 200, 300, 400, 600];
+
+  uint public paso = 7000000 trx;
   uint public tarifa = 0;
   
   uint public totalInvestors;
@@ -52,7 +56,8 @@ contract TronLegendario {
     owner = msg.sender;
     investors[msg.sender].registered = true;
     investors[msg.sender].sponsor = owner;
-    investors[msg.sender].exist = true;
+
+    ULTIMO_REINICIO = block.number;
 
     totalInvestors++;
     
@@ -66,6 +71,28 @@ contract TronLegendario {
   function InContract() public view returns (uint){
     return address(this).balance;
   }
+  
+  function setTarifa() internal returns(uint){
+      
+      if(InContract() < paso){
+          tarifa = 0;
+      }
+      
+      if(InContract() >= paso && InContract() < 2*paso){
+          tarifa = 1;
+      }
+      
+      if(InContract() >= 2*paso && InContract() < 3*paso){
+          tarifa = 2;
+      }
+      
+      if(InContract() >= 3*paso ){
+          tarifa = 3;
+      }
+      
+      return tarifa;
+      
+  }
 
   function setOwner(address payable _owner) public returns (address){
     require (msg.sender == owner);
@@ -74,113 +101,86 @@ contract TronLegendario {
     owner = _owner;
     investors[owner].registered = true;
     investors[owner].sponsor = owner;
-    investors[owner].exist = false;
 
     totalInvestors++;
 
     return owner;
   }
   
-  function register() internal {
-    if (!investors[msg.sender].registered) {
-      investors[msg.sender].registered = true;
-      totalInvestors++;
-    }
+  function register(_sponsor) external {
+
+    require ( !investors[msg.sender].registered );
+    require ( investors[_sponsor].registered );
+    require ( _sponsor != NoValido );
+
+    investors[msg.sender].registered = true;
+    totalInvestors++;
+
+    investors[msg.sender].sponsor = _sponsor;
+
   }
 
-  function registerSponsor(address sponsor) internal {
-    if (!investors[msg.sender].exist){
-      investors[msg.sender].sponsor = sponsor;
-      investors[msg.sender].exist = true;
-    }
+  function column (address yo) public view returns(address[4] memory res) {
+
+    res[0] = investors[yo].sponsor;
+    yo = investors[yo].sponsor;
+    res[1] = investors[yo].sponsor;
+    yo = investors[yo].sponsor;
+    res[2] = investors[yo].sponsor;
+    yo = investors[yo].sponsor;
+    res[3] = investors[yo].sponsor;
+
+    return res;
   }
 
-  function registerReferers(address ref, address spo) internal {
+  function rewardReferers(address yo, uint amount) internal {
 
-      
-    if (investors[spo].registered) {
+    address[4] memory referi = column(yo);
+    uint[4] memory a;
+    uint[4] memory b;
 
-      investors[spo].referers.push(Referer(ref,5));
-      uint nvl = 1;
-      if (investors[spo].exist){
-        spo = investors[spo].sponsor;
-        if (investors[spo].registered){
-          investors[spo].referers.push(Referer(ref,3));
-          nvl = 2;
-          if (investors[spo].exist){
-            spo = investors[spo].sponsor;
-            if (investors[spo].registered){
-              investors[spo].referers.push(Referer(ref,2));
-              nvl = 3;
-              if (investors[spo].exist){
-                spo = investors[spo].sponsor;
-                if (investors[spo].registered){
-                   investors[spo].referers.push(Referer(ref,1));
-                   nvl = 4;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  
-  function rewardReferers(address yo, uint amount, address sponsor) internal {
-    address spo = sponsor;
     for (uint i = 0; i < 4; i++) {
+      if (investors[referi[i]].registered && referi[i] != owner ) {
 
-      if (investors[spo].exist) {
+        b[i] = porcientos[i];
+        a[i] = amount.mul(b[i]).div(100);
 
-        for (i = 0; i < investors[spo].referers.length; i++) {
-          if (!investors[spo].registered) {
-            break;
-          }
-          if ( investors[spo].referers[i].myReferer == yo){
-              uint b = investors[spo].referers[i].nivel;
-              uint a = amount * b / 100;
-              investors[spo].balanceRef += a;
-              investors[spo].totalRef += a;
-              totalRefRewards += a;
-          }
-        }
+        investors[referi[i]].balanceRef += a[i];
+        investors[referi[i]].totalRef += a[i];
+        totalRefRewards += a[i];
+     
+      }else{
 
-        spo = investors[spo].sponsor;
+        b[i] = porcientos[i];
+        a[i] = amount.mul(b[i]).div(100);
+
+        investors[referi[i]].balanceRef += a[i];
+        investors[referi[i]].totalRef += a[i];
+        totalRefRewards += a[i];
+        
+        break;
       }
     }
     
     
   }
   
-  function nivelContract()external {
-      
-      
-      
-  }
   
   function deposit(address _sponsor) external payable {
     require(msg.value >= MIN_DEPOSIT);
     require (_sponsor != msg.sender);
-    
-    register();
 
-    if (_sponsor != owner && investors[_sponsor].registered && _sponsor != NoValido){
-      if (!investors[msg.sender].exist){
-        registerSponsor(_sponsor);
-        registerReferers(msg.sender, investors[msg.sender].sponsor);
-      }
-    }
-
-    if (investors[msg.sender].exist){
-      rewardReferers(msg.sender, msg.value, investors[msg.sender].sponsor);
-    }
+    setTarifa();
+    investors[msg.sender].deposits.push(Deposit(tarifa, msg.value, block.number));
     
     investors[msg.sender].invested += msg.value;
     totalInvested += msg.value;
     
-    investors[msg.sender].deposits.push(Deposit(tarifa, msg.value, block.number));
-    
     owner.transfer(msg.value.mul(10).div(100));
+
+    rewardReferers(msg.sender, msg.value);
+
+    reInicio();
 
   }
   
@@ -234,21 +234,39 @@ contract TronLegendario {
     return amount;
 
   }
+
+  function reInicio() public {
+
+    uint hora = ULTIMO_REINICIO + 1*28800;
+
+    if ( block.number >= hora ){
+
+      RETIRO_DIARIO = 45000 trx;
+      ULTIMO_REINICIO = hora;
+
+    }
+    
+  }
+  
   
   function withdraw() external {
 
     uint amount = profit();
-    uint tariff = 0;
+    reInicio();
+
+    require ( RETIRO_DIARIO >= amount );
 
     uint amount20 = amount.mul(20).div(100);
     uint amount70 = amount.mul(70).div(100);
 
     if ( msg.sender.send(amount70) ) {
 
+      RETIRO_DIARIO -= amount;
+
       investors[msg.sender].withdrawn += amount70;
       investors[msg.sender].invested += amount20;
       
-      investors[msg.sender].deposits.push(Deposit(tariff, amount20, block.number));
+      investors[msg.sender].deposits.push(Deposit(tarifa, amount20, block.number));
       
       totalInvested += amount20;
     
