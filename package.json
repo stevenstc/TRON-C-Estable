@@ -1,5 +1,5 @@
 {
-  "name": "Des-CrowdFunding",
+  "name": "tron-legendario",
   "version": "1.0.1",
   "description": "Es la aplicacion para hacer Crowd Funding en la Blockchain tron",
   "main": "tronbox.js",
@@ -14,7 +14,7 @@
     "type": "git",
     "url": ""
   },
-  "author": "",
+  "author": "keneth",
   "license": "Apache 2.0",
   "bugs": {
     "url": ""
