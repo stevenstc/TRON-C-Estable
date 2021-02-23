@@ -37,26 +37,31 @@ export default class EarnTron extends Component {
     const { totalInvestors, totalInvested, totalRefRewards } = this.state;
 
     return (
-      <div className="row counters">
-            
-        <div className="col-lg-4 col-12 text-center">
-          <span data-toggle="counter-up">{totalInvestors}</span>
-          <p>Inversores Globales</p>
-        </div>
-
-        <div className="col-lg-4 col-12 text-center">
-          <span data-toggle="counter-up">{totalInvested} TRX</span>
-          <p>Invertido Global</p>
-        </div>
-
-        <div className="col-lg-4 col-12 text-center">
-          <span data-toggle="counter-up">{totalRefRewards} TRX</span>
-          <p>Recompensas  Globales Referidos</p>
-        </div>
-
-      </div>
-
-
+      <section className="section-gap aboutus-area">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-4 single-services">
+              <h1 className="pt-40 pb-30 text-white">{totalInvestors}</h1>
+              <p>
+                Global Investors
+              </p>
+            </div>
+            <div className="col-lg-4 single-services">
+              
+              <h1 className="pt-40 pb-30 text-white">{totalInvested} TRX</h1>
+              <p>
+                Global Inverted
+              </p>
+            </div>
+            <div className="col-lg-4 single-services">
+              <h1 className="pt-40 pb-30 text-white">{totalRefRewards} TRX</h1>
+              <p>
+                Global Referral Rewards
+              </p>
+            </div>                        
+          </div>
+        </div>    
+      </section>
 
     );
   }

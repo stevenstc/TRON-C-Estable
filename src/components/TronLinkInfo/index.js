@@ -55,12 +55,11 @@ export default class TronLinkInfo extends Component {
   render() {
     const { accountAddress, accountBalance, accountBandwidth} = this.state;
     return (
-      <div className="col-lg-5 mb-5">
-        <div className="card wow bounceInUp">
-            <i className="fa fa-address-card-o"></i>
-          <div className="card-body">
-            <h5 className="card-title">Billetera Conectada</h5>
-            <h6 className="card-text">
+
+
+          <div>
+            <h5 className="text-center">Billetera Conectada</h5>
+            <h6 className="text-center">
               Dirección:<br></br>
                <strong><span>{accountAddress}</span></strong><br></br><br></br>
               Balance:<br></br>
@@ -70,8 +69,8 @@ export default class TronLinkInfo extends Component {
               
             </h6>
           </div>
-        </div>
-      </div>
+
+    
     );
   };
 }

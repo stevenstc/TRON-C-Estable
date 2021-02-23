@@ -82,79 +82,65 @@ export default class EarnTron extends Component {
     const { balanceRef, totalRef, invested,  withdrawn , my, direccion, link} = this.state;
 
     return (
+
+      <section className="simple-services-area section-gap">
+        <div className="container">
+          <header style={{'text-align': 'center'}} className="section-header">
+            <h3 className="white"><span style={{'font-weight': 'bold'}}>
+              My office:</span> <br></br>
+            <span style={{'font-size': '18px'}}>{direccion}</span></h3><br />
+            <h3 className="white" >Referral link:</h3>
+            <h6 className="aboutus-area" style={{'text-align': 'center', 'padding': '1.5em'}}><a href={link}>{link}</a><br />
+            <CopyToClipboard text={link}>
+              <button type="button" className="primary-btn header-btn">Copy to clipboard</button>
+            </CopyToClipboard>
+            </h6>
+            <hr></hr>
+            
+          </header>
+
+          <div className="row">
+            <div className="col-sm-4 single-services">
+              <h4 className="pt-30 pb-20">{invested} TRX</h4>
+              <p>
+                Total invested
+              </p>
+            </div>
+
+            <div className="col-sm-4 single-services">
+              <h4 className="pt-30 pb-20">{totalRef} TRX</h4>
+              <p>
+                Total earnings from referrals
+              
+              </p>
+            </div>
+
+            <div className="col-sm-4 single-services">
+              <h4 className="pt-30 pb-20">{my} TRX</h4>
+              <p>
+                My balance
+              </p>
+            </div>
+
+            <div className="col-sm-4 single-services">
+              <h4 className="pt-30 pb-20">{balanceRef+my} TRX</h4>
+              <p>
+                Available
+              </p>
+            </div>
+
+            <div className="col-sm-4 single-services">
+              <h4 className="pt-30 pb-20">{withdrawn} TRX</h4>
+              <p>
+                withdrawn
+              
+              </p>
+            </div>
+                    
+          </div>
+        </div>  
+      </section>
       
-      <div className="container">
-
-        <header style={{'text-align': 'center'}} className="section-header">
-          <h3 className="white"><span style={{'font-weight': 'bold'}}>
-          Mi Oficina:</span> <br></br>
-          <span style={{'font-size': '18px'}}>{direccion}</span></h3><br></br>
-          <h3 className="white" style={{'font-weight': 'bold'}}>Link de referido:</h3>
-          <h6 className="white" ><a href={link}>{link}</a>&nbsp;
-          <CopyToClipboard text={link}>
-            <button type="button" className="btn btn-info">COPIAR</button>
-          </CopyToClipboard>
-          </h6>
-          <hr></hr>
-          
-        </header>
-
-        <div className="row">
-
-          <div className="col-md-6 col-lg-5 offset-lg-1 wow bounceInUp" data-wow-duration="1.4s">
-            <div className="box">
-              <div className="icon"><i className="ion-ios-analytics-outline" style={{color: '#ff689b'}}></i></div>
-              <h4 className="title"><a href="#services">{invested} TRX</a></h4>
-              <p className="description">Total invertido</p>
-            </div>
-          </div>
-          <div className="col-md-6 col-lg-5 wow bounceInUp" data-wow-duration="1.4s">
-            <div className="box">
-              <div className="icon"><i className="ion-ios-bookmarks-outline" style={{color: '#e9bf06'}}></i></div>
-              <h4 className="title"><a href="#services">{totalRef} TRX</a></h4>
-              <p className="description">Total ganancias por referidos</p>
-            </div>
-          </div>
-
-          <div className="col-md-6 col-lg-5 offset-lg-1 wow bounceInUp" data-wow-delay="0.1s" data-wow-duration="1.4s">
-            <div className="box">
-              <div className="icon"><i className="ion-ios-paper-outline" style={{color: '#3fcdc7'}}></i></div>
-              <p className="description">Mi balance</p>
-              <h4 className="title"><a href="#services">{my} TRX</a></h4>
-              
-            </div>
-          </div>
-          <div className="col-md-6 col-lg-5 wow bounceInUp" data-wow-delay="0.1s" data-wow-duration="1.4s">
-            <div className="box">
-              <div className="icon"><i className="ion-ios-paper-outline" style={{color: '#3fcdc7'}}></i></div>
-              <p className="description">Balance por referidos</p>
-              <h4 className="title"><a href="#services"> {balanceRef} TRX</a></h4>
-              
-            </div>
-          </div>
-
-          <div className="col-md-6 col-lg-5 offset-lg-1 wow bounceInUp" data-wow-delay="0.1s" data-wow-duration="1.4s">
-            <div className="box">
-              <div className="icon"><i className="ion-ios-speedometer-outline" style={{color:'#41cf2e'}}></i></div>
-              <h4 className="title"><a href="#services">Disponible</a></h4>
-              <p className="description">{balanceRef+my} TRX <button type="button" className="btn btn-info" onClick={() => this.withdraw()}>Retirar</button></p>
-            </div>
-          </div>
-          <div className="col-md-6 col-lg-5 wow bounceInUp" data-wow-delay="0.2s" data-wow-duration="1.4s">
-            <div className="box">
-              <div className="icon"><i className="ion-ios-clock-outline" style={{color: '#4680ff'}}></i></div>
-              <h4 className="title"><a href="#services">Retirado</a></h4>
-              <p className="description">{withdrawn} TRX</p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    
-
-
-
     );
   }
 }

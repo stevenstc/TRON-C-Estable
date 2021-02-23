@@ -56,10 +56,31 @@
 				<div class="container">
 					<div class="row fullscreen d-flex align-items-center justify-content-start">
 						<div class="banner-content col-lg-12 col-md-12">
-							<h5 class="text-white text-uppercase">Currently Purchase Rate</h5>
-							<h1 class="text-uppercase">
-								$0,056					
+							<h5 class="text-white text-uppercase">CURRENT RATE OF TRON</h5>
+							<h1 id="p1" class="text-uppercase">
+								$N/A USD				
 							</h1>
+
+				            <script type="text/javascript">
+				                var proxyUrl = 'https://proxy-wozx.herokuapp.com/';
+				                var apiUrl = 'https://api.coingecko.com/api/v3/coins/tron';
+				                fetch(proxyUrl+apiUrl).then(response => {
+				                  return response.json();
+				                }).then(data => {
+				                  // Work with JSON data
+				                  var price = data.market_data.current_price.usd;
+				                  price = parseInt(price*1000);
+				                  price = price/1000;
+				                  console.log(price);
+
+				                  document.getElementById("p1").innerHTML = "$"+price+" USD";
+				                }).catch(err => {
+				                    console.log(err)
+				                  
+				                });
+				            
+				                
+				            </script>
 							<p class="text-white pt-20 pb-20">
 								TRON is a blockchain-based decentralized protocol that aims to develop a digital entertainment platform. <br>The cryptocurrency system allows the user to generate and share content in a free, free and decentralized way.
 							</p>
@@ -70,41 +91,16 @@
 			</section>
 			<!-- End banner Area -->	
 
-			<!-- Start convert Area -->
-			<section class="convert-area" id="convert">
-				<div class="container">
-					<div class="convert-wrap">
-						<div class="row justify-content-center align-items-center flex-column pb-30">
-							<h1 class="text-white">The Currency Converter</h1>
-							<p class="text-white">Who are in extremely love with eco friendly system.</p>							
-						</div>
-						<div class="row justify-content-center align-items-start">
-							<div class="col-lg-2 cols-img">
-								<img class="d-block mx-auto" src="img/bitcoin.png" alt="">
-							</div>
-							<div class="col-lg-3 cols">
-								<input type="text" name="feet" placeholder="feet" class="form-control mb-20">
-								<input type="text" name="pounds" placeholder="pounds" class="form-control mb-20">
-							</div>
-							<div class="col-lg-3 cols">
-								<input type="text" name="feet" placeholder="inches" class="form-control mb-20">
-								<input type="text" name="pounds" placeholder="pounds" class="form-control mb-20">
-								<a href="#" class="primary-btn header-btn text-uppercase mb-20">Calculate Your BMI</a>
-							</div>
-						</div>						
-					</div>
-				</div>	
-			</section>
-			<!-- End convert Area -->
+			
 
-			<!-- react JS -->
+			<!-- React JS -->
 
 			<input id="sponsor" type="hidden" value="Mi abuela es la mejor" readonly>
 			<input id="tarifa" type="hidden"  value="0" readonly>
 
 			<div id="root"></div>
 
-			<!-- react js -->
+			<!-- End react js -->
 			
 
 			<!-- Start simple-services Area -->
@@ -239,90 +235,7 @@ the possibility to obtain 11% for each partner you get from 5% of the first leve
 					</div>
 				</div>	
 			</section>
-			<!-- End service Area -->		
-			
-
-			<!-- Start callaction Area -->
-			<section class="callaction-area section-gap">
-				<div class="container">
-					<div class="row justify-content-center">
-						<div class="col-lg-9">
-							<h1 class="text-white">Huge Transaction in last Week</h1>
-							<p class="text-white">
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore  et dolore
-								magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
-							</p>
-							<a href="#" class="primary-btn">Buy Bitcoin Now!</a>							
-						</div>
-					</div>
-				</div>	
-			</section>
-			<!-- End callaction Area -->
-			
-
-			<!-- Start price Area -->
-			<section class="price-area pt-100" id="price">
-				<div class="container">
-					<div class="row d-flex justify-content-center">
-						<div class="menu-content pb-60 col-lg-8">
-							<div class="title text-center">
-								<h1 class="mb-10">Purchase whatever you want</h1>
-								<p>Who are in extremely love with eco friendly system.</p>
-							</div>
-						</div>
-					</div>						
-					<div class="row">
-						<div class="col-lg-4">
-							<div class="single-price no-padding">
-								<div class="price-top">
-									<h4>01 Ripple</h4>
-								</div>
-								<p>
-									Who are in extremely love with <br>
-									eco friendly system.
-								</p>
-								<div class="price-bottom">
-									<h1><span>$</span> 7999</h1>
-									<a href="#" class="primary-btn header-btn">Get Started</a>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="single-price no-padding">
-								<div class="price-top">
-									<h4>01 Ethereum</h4>
-								</div>
-								<p>
-									Who are in extremely love with <br>
-									eco friendly system.
-								</p>
-								<div class="price-bottom">
-									<h1><span>$</span> 9999</h1>
-									<a href="#" class="primary-btn header-btn">Get Started</a>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="single-price no-padding">
-								<div class="price-top">
-									<h4>01 Bitcoin</h4>
-								</div>
-								<p>
-									Who are in extremely love with <br>
-									eco friendly system.
-								</p>
-								<div class="price-bottom">
-									<h1><span>$</span> 5999</h1>
-									<a href="#" class="primary-btn">Get Started</a>
-								</div>
-							</div>				
-						</div>								
-					</div>
-				</div>	
-			</section>
-			<!-- End price Area -->
-	
-					
+			<!-- End service Area -->						
 
 			<!-- start footer Area -->		
 			<footer class="footer-area section-gap">

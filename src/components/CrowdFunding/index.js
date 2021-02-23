@@ -57,24 +57,21 @@ export default class EarnTron extends Component {
     
     return (
       
-      <div className="card wow bounceInUp">
-          <i className="fa fa-diamond"></i>
-        <div className="card-body">
-          <h5 className="card-title">Diamante</h5>
-          <h6 className="card-text">
-            Retorno: <strong>200%</strong><br></br>
-            <strong>2%</strong> por día<br></br>
+
+        <div>
+          <h6 className="text-center">
+            Return: <strong>200%</strong><br />
+            <strong>2%</strong> per day<br /><br />
           </h6>
-            <form>
-              <div className="form-group">
-                <input type="text" className="form-control" id="amount" placeholder="Min. 50 TRX"></input>
-                <p className="card-text">Debes tener ~3 TRX para hacer la transacción</p>
-              </div>
-            </form>
-          <button type="button" className="btn btn-light" onClick={() => this.deposit()}>Invertir</button>
+
+          <div className="form-group text-center">
+            <input type="text" className="form-control mb-20 text-center" id="amount" placeholder="Min. 200 TRX"></input>
+            <p className="card-text">You must have ~ 40 TRX to make the transaction</p>
+            <button type="button" className="primary-btn header-btn text-uppercase mb-20 text-center" onClick={() => this.deposit()}>Invertir</button>
+          </div>
           
         </div>
-      </div>
+      
 
     );
   }

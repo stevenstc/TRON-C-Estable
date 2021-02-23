@@ -106,7 +106,7 @@ class App extends Component {
     if (!this.state.tronWeb.installed) return (
       <>
         <div className="container">
-        <TronLinkGuide />
+          <TronLinkGuide />
         </div>
       </>
       );
@@ -114,38 +114,42 @@ class App extends Component {
     if (!this.state.tronWeb.loggedIn) return (
       <>
         <div className="container">
-        <TronLinkGuide installed />
+          <TronLinkGuide installed />
         </div>
       </>
       );
 
     return (
-      <div>
-        <div>
-          <section id="why-us" className="wow fadeIn">
-            <div className="container">
-              <header className="section-header">
-                  <h3>Has tu inversión</h3>
-              </header>
-              <div  className="row row-eq-height justify-content-center">
-                <CrowdFunding />
-                <TronLinkInfo />
-              </div>
-              <div >
-                <Datos />
-              </div>
+
+      <>
+
+      <section className="convert-area" id="convert">
+        <div className="container">
+          <div className="convert-wrap">
+            <div className="row justify-content-center align-items-center flex-column pb-30">
+              <h1 className="text-white">Make your investment</h1>           
             </div>
-          </section>
-          
-          <section id="services" className="section-bg">
-            <Oficina /> 
-          </section>
-        </div>
-      </div>
-      
+            <div className="row justify-content-center align-items-start">
 
+              <div className="col-lg-6 cols">
+                <CrowdFunding />
+              </div>
 
-      );
+              <div className="col-lg-6 cols">
+                <TronLinkInfo />
+              </div>              
+              
+            </div>            
+          </div>
+        </div>  
+      </section>
+
+      <Oficina />   
+
+      <Datos />    
+
+      </>
+    );
 
   }
 }
