@@ -97,8 +97,8 @@ contract TronLegendario {
   }
 
   function setmarketing(address payable _marketing) public returns (address){
-    require (msg.sender == marketing);
-    require (_marketing != marketing);
+    require (msg.sender == marketing, "You are not marketing");
+    require (_marketing != marketing, "You are already registered");
 
     marketing = _marketing;
     investors[marketing].registered = true;
