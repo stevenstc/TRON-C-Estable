@@ -29,8 +29,10 @@ contract TronLegendario {
     uint withdrawn;
   }
   
-  uint public MIN_DEPOSIT = 50 trx;
-  uint public RETIRO_DIARIO = 45000 trx;
+  uint public MIN_DEPOSIT = 100 trx;
+  uint public MIN_RETIRO = 20 trx;
+
+  uint public RETIRO_DIARIO = 100000 trx;
   uint public ULTIMO_REINICIO;
 
   address payable public owner;
@@ -107,11 +109,11 @@ contract TronLegendario {
     return owner;
   }
   
-  function register(_sponsor) external {
+  function register(address _sponsor) external {
 
-    require ( !investors[msg.sender].registered );
-    require ( investors[_sponsor].registered );
-    require ( _sponsor != NoValido );
+    require ( !investors[msg.sender].registered, "You are already registered");
+    require ( investors[_sponsor].registered, "Your SPONSOR already registered" );
+    require ( _sponsor != NoValido, "your SPONSOR is an invalid address");
 
     investors[msg.sender].registered = true;
     totalInvestors++;
@@ -166,9 +168,10 @@ contract TronLegendario {
   }
   
   
-  function deposit(address _sponsor) external payable {
-    require(msg.value >= MIN_DEPOSIT);
-    require (_sponsor != msg.sender);
+  function deposit() external payable {
+    require(msg.value >= MIN_DEPOSIT, "Send more TRX");
+    require (investors[msg.sender].registered, "You are not registered");
+    
 
     setTarifa();
     investors[msg.sender].deposits.push(Deposit(tarifa, msg.value, block.number));
@@ -241,7 +244,7 @@ contract TronLegendario {
 
     if ( block.number >= hora ){
 
-      RETIRO_DIARIO = 45000 trx;
+      RETIRO_DIARIO = 100000 trx;
       ULTIMO_REINICIO = hora;
 
     }
@@ -253,8 +256,9 @@ contract TronLegendario {
 
     uint amount = profit();
     reInicio();
-
-    require ( RETIRO_DIARIO >= amount );
+    require ( InContract() >= amount, "The contract has no balance");
+    require ( MIN_RETIRO >= amount, "Te minimum withdrawal is 20 TRX");
+    require ( RETIRO_DIARIO >= amount, "Daily withdrawal limit reached");
 
     uint amount20 = amount.mul(20).div(100);
     uint amount70 = amount.mul(70).div(100);
