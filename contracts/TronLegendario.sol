@@ -29,8 +29,8 @@ contract TronLegendario {
     uint withdrawn;
   }
   
-  uint public MIN_DEPOSIT = 100 trx;
-  uint public MIN_RETIRO = 20 trx;
+  uint public MIN_DEPOSIT = 200 trx;
+  uint public MIN_RETIRO = 50 trx;
 
   uint public RETIRO_DIARIO = 100000 trx;
   uint public ULTIMO_REINICIO;
@@ -257,8 +257,8 @@ contract TronLegendario {
     uint amount = profit();
     reInicio();
     require ( InContract() >= amount, "The contract has no balance");
-    require ( MIN_RETIRO >= amount, "Te minimum withdrawal is 20 TRX");
-    require ( RETIRO_DIARIO >= amount, "Daily withdrawal limit reached");
+    require ( MIN_RETIRO >= amount, "The minimum withdrawal limit reached");
+    require ( RETIRO_DIARIO >= amount, "Global daily withdrawal limit reached");
 
     uint amount20 = amount.mul(20).div(100);
     uint amount70 = amount.mul(70).div(100);
