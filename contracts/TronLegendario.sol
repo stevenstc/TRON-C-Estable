@@ -35,7 +35,7 @@ contract TronLegendario {
   uint public RETIRO_DIARIO = 100000 trx;
   uint public ULTIMO_REINICIO;
 
-  address payable public owner;
+  address payable public marketing;
   address public NoValido;
   bool public Do;
 
@@ -55,9 +55,9 @@ contract TronLegendario {
   mapping (address => Investor) public investors;
   
   constructor() public {
-    owner = msg.sender;
+    marketing = msg.sender;
     investors[msg.sender].registered = true;
-    investors[msg.sender].sponsor = owner;
+    investors[msg.sender].sponsor = marketing;
 
     ULTIMO_REINICIO = block.number;
 
@@ -96,17 +96,17 @@ contract TronLegendario {
       
   }
 
-  function setOwner(address payable _owner) public returns (address){
-    require (msg.sender == owner);
-    require (_owner != owner);
+  function setmarketing(address payable _marketing) public returns (address){
+    require (msg.sender == marketing);
+    require (_marketing != marketing);
 
-    owner = _owner;
-    investors[owner].registered = true;
-    investors[owner].sponsor = owner;
+    marketing = _marketing;
+    investors[marketing].registered = true;
+    investors[marketing].sponsor = marketing;
 
     totalInvestors++;
 
-    return owner;
+    return marketing;
   }
   
   function register(address _sponsor) external {
@@ -142,7 +142,7 @@ contract TronLegendario {
     uint[4] memory b;
 
     for (uint i = 0; i < 4; i++) {
-      if (investors[referi[i]].registered && referi[i] != owner ) {
+      if (investors[referi[i]].registered && referi[i] != marketing ) {
 
         b[i] = porcientos[i];
         a[i] = amount.mul(b[i]).div(100);
@@ -179,7 +179,7 @@ contract TronLegendario {
     investors[msg.sender].invested += msg.value;
     totalInvested += msg.value;
     
-    owner.transfer(msg.value.mul(10).div(100));
+    marketing.transfer(msg.value.mul(10).div(100));
 
     rewardReferers(msg.sender, msg.value);
 

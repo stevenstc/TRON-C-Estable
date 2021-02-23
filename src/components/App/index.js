@@ -7,7 +7,6 @@ import Datos from "../Datos";
 import Oficina from "../Oficina";
 import TronLinkInfo from "../TronLinkInfo";
 import TronLinkGuide from "../TronLinkGuide";
-import PanelOwner from "../PanelOwner";
 
 
 const FOUNDATION_ADDRESS = "TWiWt5SEDzaEqS6kE5gandWMNfxR2B5xzg";
@@ -131,7 +130,6 @@ class App extends Component {
               <div  className="row row-eq-height justify-content-center">
                 <CrowdFunding />
                 <TronLinkInfo />
-                <PanelOwner />
               </div>
               <div >
                 <Datos />
