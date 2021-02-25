@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/TRON-C-Estable/precache-manifest.78995cde4909ee141525be0555dc6fdf.js"
+  "/TRON-C-Estable/precache-manifest.0fa38474bc40e08f68f4b696f32be08f.js"
 );
 
 self.addEventListener('message', (event) => {
