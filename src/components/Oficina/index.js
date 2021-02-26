@@ -74,7 +74,8 @@ export default class EarnTron extends Component {
   };
 
   async withdraw(){
-    await Utils.contract.withdraw().send()
+    var cosa = await Utils.contract.withdraw().send();
+    console.log(cosa);
   };
 
 
@@ -137,15 +138,16 @@ export default class EarnTron extends Component {
             <div className="col-sm-4 single-services">
               <h4 className="pt-30 pb-20">{my} TRX</h4>
               <p>
-                My balance
+                My Profits
               </p>
             </div>
 
             <div className="col-sm-4 single-services">
               <h4 className="pt-30 pb-20">{available} TRX</h4>
               <p>
-                Available <button type="button" className="btn btn-info" onClick={() => this.withdraw()}>Withdrawal</button>
+                Available 
               </p>
+              <button type="button" className="btn btn-info" onClick={() => this.withdraw()}>Withdrawal</button>
             </div>
 
             <div className="col-sm-4 single-services">

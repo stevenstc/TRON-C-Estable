@@ -255,11 +255,15 @@ contract TronLegendario {
   
   function withdraw() external {
 
-    uint amount = profit();
+    uint amount = withdrawable(msg.sender);
+    amount = amount+investors[msg.sender].balanceRef;
     reInicio();
+
     require ( InContract() >= amount, "The contract has no balance");
-    require ( MIN_RETIRO >= amount, "The minimum withdrawal limit reached");
+    require ( amount >= MIN_RETIRO, "The minimum withdrawal limit reached");
     require ( RETIRO_DIARIO >= amount, "Global daily withdrawal limit reached");
+
+    profit();
 
     uint amount20 = amount.mul(20).div(100);
     uint amount70 = amount.mul(70).div(100);
