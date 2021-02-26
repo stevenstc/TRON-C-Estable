@@ -144,7 +144,7 @@ export default class EarnTron extends Component {
             <div className="col-sm-4 single-services">
               <h4 className="pt-30 pb-20">{available} TRX</h4>
               <p>
-                Available
+                Available <button type="button" className="btn btn-info" onClick={() => this.withdraw()}>Withdrawal</button>
               </p>
             </div>
 

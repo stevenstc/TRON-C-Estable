@@ -187,30 +187,6 @@ contract TronLegendario {
 
   }
 
-  function redeposit(uint _amount) external payable {
-
-    uint amount = withdrawable(msg.sender);
-
-    require(_amount <= amount, "You don't have enough TRX");
-    require(_amount >= MIN_DEPOSIT, "Send more TRX");
-    require (investors[msg.sender].registered, "You are not registered");
-    
-    setTarifa();
-
-    investors[msg.sender].balanceRef -= _amount;
-    
-    uint amount90 = _amount.mul(90).div(100);
-
-    investors[msg.sender].invested += amount90;
-    
-    investors[msg.sender].deposits.push(Deposit(tarifa, amount90, block.number));
-    
-    totalInvested += amount90;
-
-    reInicio();
-    
-
-  }
   
   function withdrawable(address any_user) public view returns (uint amount) {
     Investor storage investor = investors[any_user];

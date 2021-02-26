@@ -130,26 +130,6 @@ export default class EarnTron extends Component {
   };
 
 
-  async reInvest(){
-
-    const {registrado} = this.state;
-
-
-    var amount = document.getElementById("amount").value;
-
-    amount = parseInt(amount * 1000000);
-
-
-    if (registrado) {
-
-      await Utils.contract.redeposit(amount).send();
-
-      document.getElementById("amount").value = "";
-
-    }
-
-  };
-
   render() {
 
     var { texto, min, tarifa} = this.state;
@@ -188,7 +168,6 @@ export default class EarnTron extends Component {
             <input type="text" className="form-control mb-20 text-center" id="amount" placeholder={min}></input>
             <p className="card-text">You must have ~ 50 TRX to make the transaction</p>
             
-            <button type="button" style={{'margin-right': '3.8em'}} className="primary-btn header-btn text-uppercase mb-20 text-center" onClick={() => this.reInvest()}>Re-Invest</button>
             <button type="button" style={{'margin-right': '3.8em'}} className="primary-btn header-btn text-uppercase mb-20 text-center" onClick={() => this.deposit()}>{texto}</button>
           </div>
           
