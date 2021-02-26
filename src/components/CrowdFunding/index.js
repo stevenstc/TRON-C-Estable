@@ -71,60 +71,69 @@ export default class EarnTron extends Component {
 
   async deposit() {
 
-    const {registrado} = this.state;
+
+    const { registrado, min } = this.state;
 
 
     var amount = document.getElementById("amount").value;
 
+    if ( amount >= min ){
 
-    if (registrado) {
+        var loc = document.location.href;
+        if(loc.indexOf('?')>0){
+            var getString = loc.split('?')[1];
+            var GET = getString.split('&');
+            var get = {};
+            for(var i = 0, l = GET.length; i < l; i++){
+                var tmp = GET[i].split('=');
+                get[tmp[0]] = unescape(decodeURI(tmp[1]));
+            }
+            
+            if (get['ref']) {
+              tmp = get['ref'].split('#');
 
-      await Utils.contract.deposit().send({
-        shouldPollResponse: true,
-        callValue: amount * 1000000 // converted to SUN
-      });
+              var inversors = await Utils.contract.investors(tmp[0]).call();
 
-      document.getElementById("amount").value = "";
+              console.log(inversors);
+
+              if ( inversors.registered ) {
+                document.getElementById('sponsor').value = tmp[0]; 
+              }else{
+                document.getElementById('sponsor').value = cons.WS;         
+              }
+            }else{
+               document.getElementById('sponsor').value = cons.WS;
+            }
+               
+        }else{
+          
+            document.getElementById('sponsor').value = cons.WS; 
+        }
+
+        var sponsor = document.getElementById("sponsor").value;
+
+        const account =  await window.tronWeb.trx.getAccount();
+        var accountAddress = account.address;
+        accountAddress = window.tronWeb.address.fromHex(accountAddress);
+
+        var investors = await Utils.contract.investors(accountAddress).call();
+
+        if (investors.registered) {
+          
+          sponsor = investors.sponsor;
+          
+        }
+
+        await Utils.contract.deposit(sponsor).send({
+          shouldPollResponse: true,
+          callValue: amount * 1000000 // converted to SUN
+        });
+
+        document.getElementById("amount").value = "";
 
     }else{
-
-      document.getElementById("amount").value = "";
-
-      var loc = document.location.href;
-      if(loc.indexOf('?')>0){
-          var getString = loc.split('?')[1];
-          var GET = getString.split('&');
-          var get = {};
-          for(var i = 0, l = GET.length; i < l; i++){
-              var tmp = GET[i].split('=');
-              get[tmp[0]] = unescape(decodeURI(tmp[1]));
-          }
-          
-          if (get['ref']) {
-            tmp = get['ref'].split('#');
-            var inversors = await Utils.contract.investors(tmp[0]).call();
-            console.log(inversors);
-            if ( inversors.registered && inversors.exist ) {
-              document.getElementById('sponsor').value = tmp[0]; 
-            }else{
-              document.getElementById('sponsor').value = cons.WS;         
-            }
-          }else{
-             document.getElementById('sponsor').value = cons.WS;
-          }
-             
-      }else{
-        
-          document.getElementById('sponsor').value = cons.WS; 
-      }
-
-      let sponsor = document.getElementById("sponsor").value;
-
-      await Utils.contract.register(sponsor).send();
-
+      window.alert("Please enter an amount greater than 200 TRX")
     }
-
-
     
   };
 

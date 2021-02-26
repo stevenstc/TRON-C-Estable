@@ -19,6 +19,7 @@ contract TronLegendario {
 
   struct Investor {
     bool registered;
+    bool recompensa;
     address sponsor;
     Referer[] referers;
     uint balanceRef;
@@ -32,7 +33,7 @@ contract TronLegendario {
   uint public MIN_DEPOSIT = 200 trx;
   uint public MIN_RETIRO = 50 trx;
 
-  uint public RETIRO_DIARIO = 100000 trx;
+  uint public RETIRO_DIARIO = 10000 trx;
   uint public ULTIMO_REINICIO;
 
   address payable public marketing;
@@ -44,7 +45,7 @@ contract TronLegendario {
   uint[5] public tiempo = [ 100 * 28800, 100 * 28800, 100 * 28800, 100 * 28800, 100 * 28800];
   uint[5] public porcent = [ 200, 300, 400, 600];
 
-  uint public paso = 7000000 trx;
+  uint public paso = 1000 trx;
   uint public tarifa = 0;
   
   uint public totalInvestors;
@@ -109,18 +110,6 @@ contract TronLegendario {
     return marketing;
   }
   
-  function register(address _sponsor) external {
-
-    require ( !investors[msg.sender].registered, "You are already registered");
-    require ( investors[_sponsor].registered, "Your SPONSOR already registered" );
-    require ( _sponsor != NoValido, "your SPONSOR is an invalid address");
-
-    investors[msg.sender].registered = true;
-    totalInvestors++;
-
-    investors[msg.sender].sponsor = _sponsor;
-
-  }
 
   function column (address yo) public view returns(address[4] memory res) {
 
@@ -144,12 +133,14 @@ contract TronLegendario {
     for (uint i = 0; i < 4; i++) {
       if (investors[referi[i]].registered && referi[i] != marketing ) {
 
-        b[i] = porcientos[i];
-        a[i] = amount.mul(b[i]).div(100);
+        if ( investors[referi[i]].recompensa ){
+          b[i] = porcientos[i];
+          a[i] = amount.mul(b[i]).div(100);
 
-        investors[referi[i]].balanceRef += a[i];
-        investors[referi[i]].totalRef += a[i];
-        totalRefRewards += a[i];
+          investors[referi[i]].balanceRef += a[i];
+          investors[referi[i]].totalRef += a[i];
+          totalRefRewards += a[i];
+        }
      
       }else{
 
@@ -168,22 +159,39 @@ contract TronLegendario {
   }
   
   
-  function deposit() external payable {
-    require(msg.value >= MIN_DEPOSIT, "Send more TRX");
-    require (investors[msg.sender].registered, "You are not registered");
-    
+  function deposit(address _sponsor) external payable {
+    require ( msg.value >= MIN_DEPOSIT, "Send more TRX");
+    require ( investors[msg.sender].registered, "You are not registered");
 
     setTarifa();
-    investors[msg.sender].deposits.push(Deposit(tarifa, msg.value, block.number));
-    
-    investors[msg.sender].invested += msg.value;
-    totalInvested += msg.value;
-    
-    marketing.transfer(msg.value.mul(10).div(100));
 
-    rewardReferers(msg.sender, msg.value);
+    if (!investors[msg.sender].registered){
 
-    reInicio();
+      investors[msg.sender].registered = true;
+      investors[msg.sender].sponsor = _sponsor;
+    }
+
+    if ( _sponsor == investors[msg.sender].sponsor){
+
+      investors[msg.sender].deposits.push(Deposit(tarifa, msg.value, block.number));
+
+      if (!investors[msg.sender].recompensa){
+
+        investors[msg.sender].recompensa = true;
+        totalInvestors++;
+
+      }
+      
+      investors[msg.sender].invested += msg.value;
+      totalInvested += msg.value;
+      
+      marketing.transfer(msg.value.mul(10).div(100));
+
+      rewardReferers(msg.sender, msg.value);
+
+      reInicio();
+
+    }
 
   }
 
