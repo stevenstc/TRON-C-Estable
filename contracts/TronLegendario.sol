@@ -42,8 +42,8 @@ contract TronLegendario {
 
   uint[4] public porcientos = [5, 3, 2, 1];
   
-  uint[5] public tiempo = [ 100 * 28800, 100 * 28800, 100 * 28800, 100 * 28800, 100 * 28800];
-  uint[5] public porcent = [ 200, 300, 400, 600];
+  uint[5] public tiempo = [ 100 * 28800, 66 * 28800, 50 * 28800, 40 * 28800, 33 * 28800];
+  uint[5] public porcent = [ 200, 200, 200, 200];
 
   uint public paso = 1000 trx;
   uint public tarifa = 0;
