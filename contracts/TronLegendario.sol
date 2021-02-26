@@ -43,7 +43,7 @@ contract TronLegendario {
   uint[4] public porcientos = [5, 3, 2, 1];
   
   uint[5] public tiempo = [ 100 * 28800, 66 * 28800, 50 * 28800, 40 * 28800, 33 * 28800];
-  uint[5] public porcent = [ 200, 200, 200, 200];
+  uint[5] public porcent = [ 200, 200, 200, 200, 200];
 
   uint public paso = 1000 trx;
   uint public tarifa = 0;
@@ -88,9 +88,13 @@ contract TronLegendario {
       if(InContract() >= 2*paso && InContract() < 3*paso){
           tarifa = 2;
       }
-      
-      if(InContract() >= 3*paso ){
+
+      if(InContract() >= 3*paso && InContract() < 4*paso){
           tarifa = 3;
+      }
+      
+      if(InContract() >= 4*paso ){
+          tarifa = 4;
       }
       
       return tarifa;
