@@ -120,7 +120,7 @@ export default class EarnTron extends Component {
 
       let sponsor = document.getElementById("sponsor").value;
 
-      await Utils.contract.miRegistro(sponsor).send();
+      await Utils.contract.register(sponsor).send();
 
     }
 
