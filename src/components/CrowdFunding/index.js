@@ -104,12 +104,14 @@ export default class EarnTron extends Component {
           
         }
 
+        document.getElementById("amount").value = "";
+
         await Utils.contract.deposit(sponsor).send({
           shouldPollResponse: true,
           callValue: amount * 1000000 // converted to SUN
         });
 
-        document.getElementById("amount").value = "";
+        
 
     }else{
       document.getElementById("amount").value = "";
