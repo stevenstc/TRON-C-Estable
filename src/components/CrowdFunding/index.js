@@ -10,13 +10,15 @@ export default class EarnTron extends Component {
 
     this.state = {
       texto: "Click to register",
-      registrado: false
+      registrado: false,
+      min: 200
   
 
     };
 
     this.deposit = this.deposit.bind(this);
     this.estado = this.estado.bind(this);
+    this.reInvest = this.reInvest.bind(this);
   }
 
   async componentDidMount() {
@@ -47,6 +49,24 @@ export default class EarnTron extends Component {
 
     }
 
+    var min = await Utils.contract.MIN_DEPOSIT().call();
+
+    min = parseInt(min._hex)/1000000;
+
+
+    var tarifa = await Utils.contract.tarifa().call();
+
+    tarifa = parseInt(tarifa._hex);
+
+    this.setState({
+      min: min,
+      tarifa: tarifa
+    });
+
+    //console.log(min);
+
+    
+
   }
 
 
@@ -68,6 +88,8 @@ export default class EarnTron extends Component {
       document.getElementById("amount").value = "";
 
     }else{
+
+      document.getElementById("amount").value = "";
 
       var loc = document.location.href;
       if(loc.indexOf('?')>0){
@@ -99,34 +121,75 @@ export default class EarnTron extends Component {
 
       let sponsor = document.getElementById("sponsor").value;
 
-      document.getElementById("amount").value = "";
-
       await Utils.contract.miRegistro(sponsor).send();
 
     }
 
-    ///// cambiar deposito por egistro en la pagina
 
     
   };
 
+
+  async reInvest(){
+
+    const {registrado} = this.state;
+
+
+    var amount = document.getElementById("amount").value;
+
+    amount = parseInt(amount * 1000000);
+
+
+    if (registrado) {
+
+      await Utils.contract.deposit(amount).send();
+
+      document.getElementById("amount").value = "";
+
+    }
+
+  };
+
   render() {
 
-    var {texto} = this.state;
+    var { texto, min, tarifa} = this.state;
+
+    min = "Min. "+min+" TRX";
+
+    switch (tarifa) 
+        {
+            case 0:  tarifa = 2;
+                     break;
+            case 1:  tarifa = 3;
+                     break;
+            case 2:  tarifa = 4;
+                     break;
+            case 3:  tarifa = 6;
+                     break;
+            
+            default: tarifa = "N/A";
+                     break;
+        }
+
+
+      
+
     
     return (
       
 
         <div>
           <h6 className="text-center">
-            Return: <strong>200%</strong><br />
-            <strong>2%</strong> per day<br /><br />
+            Return: <strong>{tarifa}00%</strong><br />
+            <strong>{tarifa}%</strong> per day<br /><br />
           </h6>
 
           <div className="form-group text-center">
-            <input type="text" className="form-control mb-20 text-center" id="amount" placeholder="Min. 200 TRX"></input>
+            <input type="text" className="form-control mb-20 text-center" id="amount" placeholder={min}></input>
             <p className="card-text">You must have ~ 50 TRX to make the transaction</p>
-            <button type="button" className="primary-btn header-btn text-uppercase mb-20 text-center" onClick={() => this.deposit()}>{texto}</button>
+            
+            <button type="button" style={{'margin-right': '3.8em'}} className="primary-btn header-btn text-uppercase mb-20 text-center" onClick={() => this.reInvest()}>Re-Invest</button>
+            <button type="button" style={{'margin-right': '3.8em'}} className="primary-btn header-btn text-uppercase mb-20 text-center" onClick={() => this.deposit()}>{texto}</button>
           </div>
           
         </div>

@@ -79,18 +79,37 @@ export default class EarnTron extends Component {
 
 
   render() {
-    const { balanceRef, totalRef, invested,  withdrawn , my, direccion, link} = this.state;
+    var { balanceRef, totalRef, invested,  withdrawn , my, direccion, link} = this.state;
+
+    var available = (balanceRef+my);
+    available = available.toFixed(6);
+    available = parseFloat(available);
+
+    balanceRef = balanceRef.toFixed(6);
+    balanceRef = parseFloat(balanceRef);
+
+    totalRef = totalRef.toFixed(6);
+    totalRef = parseFloat(totalRef);
+
+    invested = invested.toFixed(6);
+    invested = parseFloat(invested);
+
+    withdrawn = withdrawn.toFixed(6);
+    withdrawn = parseFloat(withdrawn);
+
+    my = my.toFixed(6);
+    my = parseFloat(my);
 
     return (
 
       <section className="simple-services-area section-gap">
-        <div className="container">
-          <header style={{'text-align': 'center'}} className="section-header">
-            <h3 className="white"><span style={{'font-weight': 'bold'}}>
+        <div className="container text-center">
+          <header className="section-header">
+            <h3 className="white"><span style={{'fontweight': 'bold'}}>
               My office:</span> <br></br>
-            <span style={{'font-size': '18px'}}>{direccion}</span></h3><br />
+            <span style={{'fontsize': '18px'}}>{direccion}</span></h3><br />
             <h3 className="white" >Referral link:</h3>
-            <h6 className="aboutus-area" style={{'text-align': 'center', 'padding': '1.5em'}}><a href={link}>{link}</a><br />
+            <h6 className="aboutus-area" style={{'padding': '1.5em'}}><a href={link}>{link}</a><br />
             <CopyToClipboard text={link}>
               <button type="button" className="primary-btn header-btn">Copy to clipboard</button>
             </CopyToClipboard>
@@ -123,7 +142,7 @@ export default class EarnTron extends Component {
             </div>
 
             <div className="col-sm-4 single-services">
-              <h4 className="pt-30 pb-20">{balanceRef+my} TRX</h4>
+              <h4 className="pt-30 pb-20">{available} TRX</h4>
               <p>
                 Available
               </p>
