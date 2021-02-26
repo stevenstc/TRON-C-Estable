@@ -142,7 +142,7 @@ export default class EarnTron extends Component {
 
     if (registrado) {
 
-      await Utils.contract.deposit(amount).send();
+      await Utils.contract.redeposit(amount).send();
 
       document.getElementById("amount").value = "";
 
