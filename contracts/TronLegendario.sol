@@ -189,13 +189,15 @@ contract TronLegendario {
 
   function redeposit(uint _amount) external payable {
 
-    uint amount = profit();
+    uint amount = withdrawable(msg.sender);
 
     require(_amount <= amount, "You don't have enough TRX");
     require(_amount >= MIN_DEPOSIT, "Send more TRX");
     require (investors[msg.sender].registered, "You are not registered");
     
     setTarifa();
+
+    investors[msg.sender].balanceRef -= _amount;
     
     uint amount90 = _amount.mul(90).div(100);
 
