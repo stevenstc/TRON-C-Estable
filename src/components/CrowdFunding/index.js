@@ -18,7 +18,6 @@ export default class EarnTron extends Component {
 
     this.deposit = this.deposit.bind(this);
     this.estado = this.estado.bind(this);
-    this.reInvest = this.reInvest.bind(this);
   }
 
   async componentDidMount() {
