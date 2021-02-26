@@ -161,7 +161,6 @@ contract TronLegendario {
   
   function deposit(address _sponsor) external payable {
     require ( msg.value >= MIN_DEPOSIT, "Send more TRX");
-    require ( investors[msg.sender].registered, "You are not registered");
 
     setTarifa();
 
@@ -171,7 +170,7 @@ contract TronLegendario {
       investors[msg.sender].sponsor = _sponsor;
     }
 
-    if ( _sponsor == investors[msg.sender].sponsor){
+    if ( _sponsor == investors[msg.sender].sponsor ){
 
       investors[msg.sender].deposits.push(Deposit(tarifa, msg.value, block.number));
 

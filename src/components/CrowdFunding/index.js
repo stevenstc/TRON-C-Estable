@@ -9,8 +9,7 @@ export default class EarnTron extends Component {
     super(props);
 
     this.state = {
-      texto: "Click to register",
-      registrado: false,
+
       min: 200
   
 
@@ -28,25 +27,6 @@ export default class EarnTron extends Component {
 
   async estado(){
 
-    const account =  await window.tronWeb.trx.getAccount();
-    var accountAddress = account.address;
-    accountAddress = window.tronWeb.address.fromHex(accountAddress);
-    var investors = await Utils.contract.investors(accountAddress).call();
-
-    if (!investors.registered) {
-      document.getElementById("amount").value = "";
-      this.setState({
-        texto:"Click to register",
-        registrado: false
-      });
-    }else{
-
-      this.setState({
-        texto:"Invest",
-        registrado: true
-      });
-
-    }
 
     var min = await Utils.contract.MIN_DEPOSIT().call();
 
@@ -72,7 +52,7 @@ export default class EarnTron extends Component {
   async deposit() {
 
 
-    const { registrado, min } = this.state;
+    const { min } = this.state;
 
 
     var amount = document.getElementById("amount").value;
@@ -132,6 +112,7 @@ export default class EarnTron extends Component {
         document.getElementById("amount").value = "";
 
     }else{
+      document.getElementById("amount").value = "";
       window.alert("Please enter an amount greater than 200 TRX")
     }
     
@@ -140,7 +121,7 @@ export default class EarnTron extends Component {
 
   render() {
 
-    var { texto, min, tarifa} = this.state;
+    var { min, tarifa } = this.state;
 
     min = "Min. "+min+" TRX";
 
@@ -173,10 +154,10 @@ export default class EarnTron extends Component {
           </h6>
 
           <div className="form-group text-center">
-            <input type="text" className="form-control mb-20 text-center" id="amount" placeholder={min}></input>
+            <input type="number" className="form-control mb-20 text-center" id="amount" placeholder={min}></input>
             <p className="card-text">You must have ~ 50 TRX to make the transaction</p>
             
-            <button type="button" style={{'margin-right': '3.8em'}} className="primary-btn header-btn text-uppercase mb-20 text-center" onClick={() => this.deposit()}>{texto}</button>
+            <button type="button" style={{'margin-right': '3.8em'}} className="primary-btn header-btn text-uppercase mb-20 text-center" onClick={() => this.deposit()}>Invest</button>
           </div>
           
         </div>
