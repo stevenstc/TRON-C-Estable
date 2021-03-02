@@ -37,7 +37,7 @@ export default class EarnTron extends Component {
     const { totalInvestors, totalInvested, totalRefRewards } = this.state;
 
     return (
-      <section className="section-gap aboutus-area">
+      <section id="stats" className="section-gap aboutus-area">
         <div className="container">
           <div className="row">
             <div className="col-lg-4 single-services">

@@ -158,8 +158,11 @@ export default class EarnTron extends Component {
           <div className="form-group text-center">
             <input type="number" className="form-control mb-20 text-center" id="amount" placeholder={min}></input>
             <p className="card-text">You must have ~ 50 TRX to make the transaction</p>
+
+            <p> <img style={{'cursor': 'pointer'}} src="img/botonInvest.png" height="120px" alt="tron" onClick={() => this.deposit()}/></p>
+
             
-            <button type="button" style={{'margin-right': '3.8em'}} className="primary-btn header-btn text-uppercase mb-20 text-center" onClick={() => this.deposit()}>Invest</button>
+            
           </div>
           
         </div>

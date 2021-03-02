@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.js": "/TRON-C-Estable/static/js/main.59381f11.chunk.js",
-    "main.js.map": "/TRON-C-Estable/static/js/main.59381f11.chunk.js.map",
-    "runtime-main.js": "/TRON-C-Estable/static/js/runtime-main.513ada86.js",
-    "runtime-main.js.map": "/TRON-C-Estable/static/js/runtime-main.513ada86.js.map",
-    "static/js/2.1ff741db.chunk.js": "/TRON-C-Estable/static/js/2.1ff741db.chunk.js",
-    "static/js/2.1ff741db.chunk.js.map": "/TRON-C-Estable/static/js/2.1ff741db.chunk.js.map",
-    "index.html": "/TRON-C-Estable/index.html",
-    "precache-manifest.aa2af206d41cfdbafd12254d32d0551b.js": "/TRON-C-Estable/precache-manifest.aa2af206d41cfdbafd12254d32d0551b.js",
-    "service-worker.js": "/TRON-C-Estable/service-worker.js",
-    "static/js/2.1ff741db.chunk.js.LICENSE.txt": "/TRON-C-Estable/static/js/2.1ff741db.chunk.js.LICENSE.txt",
-    "static/media/TronLinkLogo.png": "/TRON-C-Estable/static/media/TronLinkLogo.d3a8f115.png"
+    "main.js": "/TRON-Pool/static/js/main.dfc5e631.chunk.js",
+    "main.js.map": "/TRON-Pool/static/js/main.dfc5e631.chunk.js.map",
+    "runtime-main.js": "/TRON-Pool/static/js/runtime-main.d765b2f2.js",
+    "runtime-main.js.map": "/TRON-Pool/static/js/runtime-main.d765b2f2.js.map",
+    "static/js/2.838ce720.chunk.js": "/TRON-Pool/static/js/2.838ce720.chunk.js",
+    "static/js/2.838ce720.chunk.js.map": "/TRON-Pool/static/js/2.838ce720.chunk.js.map",
+    "index.html": "/TRON-Pool/index.html",
+    "precache-manifest.0efbfe8938da08ff47b2bd95cc5bcf17.js": "/TRON-Pool/precache-manifest.0efbfe8938da08ff47b2bd95cc5bcf17.js",
+    "service-worker.js": "/TRON-Pool/service-worker.js",
+    "static/js/2.838ce720.chunk.js.LICENSE.txt": "/TRON-Pool/static/js/2.838ce720.chunk.js.LICENSE.txt",
+    "static/media/TronLinkLogo.png": "/TRON-Pool/static/media/TronLinkLogo.d3a8f115.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.513ada86.js",
-    "static/js/2.1ff741db.chunk.js",
-    "static/js/main.59381f11.chunk.js"
+    "static/js/runtime-main.d765b2f2.js",
+    "static/js/2.838ce720.chunk.js",
+    "static/js/main.dfc5e631.chunk.js"
   ]
 }

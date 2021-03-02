@@ -33,7 +33,7 @@ contract TronLegendario {
   uint public MIN_DEPOSIT = 200 trx;
   uint public MIN_RETIRO = 50 trx;
 
-  uint public RETIRO_DIARIO = 10000 trx;
+  uint public RETIRO_DIARIO = 100000 trx;
   uint public ULTIMO_REINICIO;
 
   address payable public marketing;
@@ -45,7 +45,7 @@ contract TronLegendario {
   uint[5] public tiempo = [ 100 * 28800, 66 * 28800, 50 * 28800, 40 * 28800, 33 * 28800];
   uint[5] public porcent = [ 200, 200, 200, 200, 200];
 
-  uint public paso = 1000 trx;
+  uint public paso = 7000000 trx;
   uint public tarifa = 0;
   
   uint public totalInvestors;

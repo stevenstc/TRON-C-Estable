@@ -103,7 +103,7 @@ export default class EarnTron extends Component {
 
     return (
 
-      <section className="simple-services-area section-gap">
+      <section  id="office" className="simple-services-area section-gap">
         <div className="container text-center">
           <header className="section-header">
             <h3 className="white"><span style={{'fontweight': 'bold'}}>
@@ -112,7 +112,7 @@ export default class EarnTron extends Component {
             <h3 className="white" >Referral link:</h3>
             <h6 className="aboutus-area" style={{'padding': '1.5em'}}><a href={link}>{link}</a><br />
             <CopyToClipboard text={link}>
-              <button type="button" className="primary-btn header-btn">Copy to clipboard</button>
+              <button type="button" className="primary-btn header-btn text-uppercase">Copy to clipboard</button>
             </CopyToClipboard>
             </h6>
             <hr></hr>
@@ -147,7 +147,7 @@ export default class EarnTron extends Component {
               <p>
                 Available 
               </p>
-              <button type="button" className="btn btn-info" onClick={() => this.withdraw()}>Withdrawal</button>
+              <button type="button" className="primary-btn header-btn text-uppercase" onClick={() => this.withdraw()}>Withdrawal</button>
             </div>
 
             <div className="col-sm-4 single-services">
