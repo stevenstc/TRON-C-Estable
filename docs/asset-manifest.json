@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.js": "/static/js/main.db230f3c.chunk.js",
-    "main.js.map": "/static/js/main.db230f3c.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.03077223.js",
-    "runtime-main.js.map": "/static/js/runtime-main.03077223.js.map",
-    "static/js/2.7efff0ea.chunk.js": "/static/js/2.7efff0ea.chunk.js",
-    "static/js/2.7efff0ea.chunk.js.map": "/static/js/2.7efff0ea.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.2bd047b81e83688eca2e8f0973344fa0.js": "/precache-manifest.2bd047b81e83688eca2e8f0973344fa0.js",
-    "service-worker.js": "/service-worker.js",
-    "static/js/2.7efff0ea.chunk.js.LICENSE.txt": "/static/js/2.7efff0ea.chunk.js.LICENSE.txt",
-    "static/media/TronLinkLogo.png": "/static/media/TronLinkLogo.d3a8f115.png"
+    "main.js": "/TRON-Pool/static/js/main.db230f3c.chunk.js",
+    "main.js.map": "/TRON-Pool/static/js/main.db230f3c.chunk.js.map",
+    "runtime-main.js": "/TRON-Pool/static/js/runtime-main.d765b2f2.js",
+    "runtime-main.js.map": "/TRON-Pool/static/js/runtime-main.d765b2f2.js.map",
+    "static/js/2.838ce720.chunk.js": "/TRON-Pool/static/js/2.838ce720.chunk.js",
+    "static/js/2.838ce720.chunk.js.map": "/TRON-Pool/static/js/2.838ce720.chunk.js.map",
+    "index.html": "/TRON-Pool/index.html",
+    "precache-manifest.f409ac0a736408cbb2fc83032f472d80.js": "/TRON-Pool/precache-manifest.f409ac0a736408cbb2fc83032f472d80.js",
+    "service-worker.js": "/TRON-Pool/service-worker.js",
+    "static/js/2.838ce720.chunk.js.LICENSE.txt": "/TRON-Pool/static/js/2.838ce720.chunk.js.LICENSE.txt",
+    "static/media/TronLinkLogo.png": "/TRON-Pool/static/media/TronLinkLogo.d3a8f115.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.03077223.js",
-    "static/js/2.7efff0ea.chunk.js",
+    "static/js/runtime-main.d765b2f2.js",
+    "static/js/2.838ce720.chunk.js",
     "static/js/main.db230f3c.chunk.js"
   ]
 }
