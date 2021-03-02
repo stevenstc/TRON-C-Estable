@@ -107,12 +107,13 @@ export default class EarnTron extends Component {
         <div className="container text-center">
           <header className="section-header">
             <h3 className="white"><span style={{'fontweight': 'bold'}}>
-              My office:</span> <br></br>
-            <span style={{'fontsize': '18px'}}>{direccion}</span></h3><br />
+              My office:</span> 
+            </h3>
+            <p>{direccion}</p><br />
             <h3 className="white" >Referral link:</h3>
-            <h6 className="aboutus-area" style={{'padding': '1.5em'}}><a href={link}>{link}</a><br />
+            <h6 className="aboutus-area" style={{'padding': '1.5em', 'fontSize': '11px'}}><a href={link}>{link}</a><br /><br />
             <CopyToClipboard text={link}>
-              <button type="button" className="primary-btn header-btn text-uppercase">Copy to clipboard</button>
+              <button type="button" className="primary-btn header-btn text-uppercase " style={{'paddingRight': '30px'}}>Copy to clipboard</button>
             </CopyToClipboard>
             </h6>
             <hr></hr>

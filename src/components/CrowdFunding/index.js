@@ -57,7 +57,11 @@ export default class EarnTron extends Component {
 
     var amount = document.getElementById("amount").value;
 
-    if ( amount >= min ){
+    const balanceInSun = await window.tronWeb.trx.getBalance(); //number
+    var balanceInTRX = window.tronWeb.fromSun(balanceInSun); //string
+    balanceInTRX = parseFloat(balanceInTRX);//number
+
+    if ( balanceInTRX >= amount+50 ){
 
         var loc = document.location.href;
         if(loc.indexOf('?')>0){
@@ -104,18 +108,33 @@ export default class EarnTron extends Component {
           
         }
 
-        document.getElementById("amount").value = "";
 
-        await Utils.contract.deposit(sponsor).send({
-          shouldPollResponse: true,
-          callValue: amount * 1000000 // converted to SUN
-        });
+        if ( amount >= min){
+
+          document.getElementById("amount").value = "";
+
+          await Utils.contract.deposit(sponsor).send({
+            shouldPollResponse: true,
+            callValue: amount * 1000000 // converted to SUN
+          });
+
+        }else{
+          window.alert("Please enter an amount greater than 200 TRX");
+          document.getElementById("amount").value = 200;
+        }
 
         
 
     }else{
-      document.getElementById("amount").value = "";
-      window.alert("Please enter an amount greater than 200 TRX")
+      window.alert("You must leave 50 TRX free in your account to make the transaction");
+
+      if ( amount > balanceInTRX) {
+        document.getElementById("amount").value = balanceInTRX-50;
+
+      }else{
+        document.getElementById("amount").value = amount-50;
+        
+      }
     }
     
   };
@@ -135,7 +154,9 @@ export default class EarnTron extends Component {
                      break;
             case 2:  tarifa = 4;
                      break;
-            case 3:  tarifa = 6;
+            case 3:  tarifa = 5;
+                     break;
+            case 4:  tarifa = 6;
                      break;
             
             default: tarifa = "N/A";

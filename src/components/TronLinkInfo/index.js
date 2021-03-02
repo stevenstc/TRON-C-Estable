@@ -58,10 +58,10 @@ export default class TronLinkInfo extends Component {
 
 
           <div>
-            <h5 className="text-center">Billetera Conectada</h5>
+            <h5 className="text-center">Connected Wallet</h5>
             <h6 className="text-center">
-              Dirección:<br></br>
-               <strong><span>{accountAddress}</span></strong><br></br><br></br>
+              Address:<br></br>
+               <strong><span style={{'fontSize': '11px'}}>{accountAddress}</span></strong><br></br><br></br>
               Balance:<br></br>
                <strong><span>{accountBalance} TRX</span></strong><br></br><br></br>
               Bandwidth:<br></br>
