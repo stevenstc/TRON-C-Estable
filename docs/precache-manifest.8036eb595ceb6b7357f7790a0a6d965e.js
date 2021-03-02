@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "652bcf865b4d49d562cfad2cc5984195",
+    "revision": "9561d02094ad88c473c1e4af55d5af2b",
     "url": "/TRON-Pool/index.html"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/TRON-Pool/static/js/2.838ce720.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "916ea516614dacd2e233",
-    "url": "/TRON-Pool/static/js/main.dfc5e631.chunk.js"
+    "revision": "994b0f738bacc82e0783",
+    "url": "/TRON-Pool/static/js/main.8d69e7d2.chunk.js"
   },
   {
     "revision": "1ea7b941b3cfe64884de",
