@@ -56,12 +56,16 @@ export default class EarnTron extends Component {
 
 
     var amount = document.getElementById("amount").value;
+    amount = parseFloat(amount);
 
     const balanceInSun = await window.tronWeb.trx.getBalance(); //number
     var balanceInTRX = window.tronWeb.fromSun(balanceInSun); //string
     balanceInTRX = parseFloat(balanceInTRX);//number
 
-    if ( balanceInTRX >= amount+50 ){
+    console.log(balanceInTRX);
+    console.log(amount);
+
+    if ( balanceInTRX-50 >= amount ){
 
         var loc = document.location.href;
         if(loc.indexOf('?')>0){
@@ -126,14 +130,28 @@ export default class EarnTron extends Component {
         
 
     }else{
-      window.alert("You must leave 50 TRX free in your account to make the transaction");
+      
+      if (amount > 200 && balanceInTRX > 250) {
 
-      if ( amount > balanceInTRX) {
-        document.getElementById("amount").value = balanceInTRX-50;
+        if ( amount > balanceInTRX) {
+          if (balanceInTRX-50 <= 0) {
+            document.getElementById("amount").value = 0;
+            window.alert("You do not have enough funds in your account you place at least 250 TRX");
+          }else{
+            document.getElementById("amount").value = balanceInTRX-50;
+            window.alert("You must leave 50 TRX free in your account to make the transaction");
+          }
+          
+          
 
+        }else{
+
+          document.getElementById("amount").value = amount-50;
+          window.alert("You must leave 50 TRX free in your account to make the transaction");
+          
+        }
       }else{
-        document.getElementById("amount").value = amount-50;
-        
+        window.alert("You do not have enough funds in your account you place at least 250 TRX");
       }
     }
     
