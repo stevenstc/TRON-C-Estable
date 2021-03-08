@@ -38,7 +38,6 @@ contract TronLegendario {
 
   address payable public marketing;
   address public NoValido;
-  bool public Do;
 
   uint[4] public porcientos = [5, 3, 2, 1];
   
